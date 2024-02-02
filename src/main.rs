@@ -1,3 +1,4 @@
+use crossterm::event::{MouseButton, MouseEvent};
 use event::EventHandler;
 use ratatui::backend::CrosstermBackend;
 use tui::Tui;
@@ -15,10 +16,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
 
     let mut terminal = ratatui::Terminal::new(backend).unwrap();
 
-    let events = EventHandler::new(250);
+    let events = EventHandler::new(500);
 
     let mut tui = Tui::new(terminal, events);
-
+    let mut dir = game.dir.clone();
     tui.enter().unwrap();
 
     while !game.game_over {
@@ -29,12 +30,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
 
         match tui.events.next().unwrap() {
             event::Event::Key(key) => {
-                update::update(&mut game, key);
+                dir = update::update(&mut game, key);
             }
-            event::Event::Tick => {
-                game.update_snake(game.dir.clone());
+
+            event::Event::Tick => { 
+                game.update_snake(dir.clone());
+
                 
             }
+      
             event::Event::Resize(w, h) => {
                 // implement todo resize
             }

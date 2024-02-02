@@ -30,7 +30,6 @@ impl Tui {
         crossterm::execute!(
             std::io::stderr(),
             EnterAlternateScreen,
-            EnableMouseCapture
         ).expect("failed to enter alternate screen");
 
         self.terminal.hide_cursor().expect("failed to hide cursor");
@@ -47,7 +46,6 @@ impl Tui {
         crossterm::execute!(
             std::io::stderr(),
             LeaveAlternateScreen,
-            DisableMouseCapture
         ).expect("failed to leave alternate screen");
 
         self.terminal.show_cursor().expect("failed to show cursor");

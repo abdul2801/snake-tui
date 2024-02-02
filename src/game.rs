@@ -4,8 +4,8 @@ use rand::Rng;
 
 #[derive(PartialEq, Eq,Debug)]
 pub struct Point {
-    x: i32,
-    y: i32,
+    pub x: i32,
+    pub y: i32,
 }
 
 impl Point {
@@ -18,11 +18,11 @@ impl Point {
 }
 
 pub struct GameState {
-    board : (i32, i32),
-    snake : VecDeque<Point>,
-    food : Point,
+    pub board : (i32, i32),
+    pub snake : VecDeque<Point>,
+    pub food : Point,
     pub dir : Direction,
-    score : i32,
+    pub score : i32,
     pub game_over : bool,
 }
 
@@ -102,8 +102,8 @@ impl GameState {
 
 
         self.food = loop {
-            let x= rng.gen_range(0..=self.board.0);
-            let y: i32= rng.gen_range(0..=self.board.1);
+            let x= rng.gen_range(0..self.board.0);
+            let y: i32= rng.gen_range(0..self.board.1);
             let apple = Point::new(x,y);
 
             if !self.snake.contains(&apple) {
@@ -132,6 +132,7 @@ impl GameState {
         if self.dir == Direction::opposite(&self.dir) {
             dir = self.dir.clone();
         }
+        // println!("{:?}", self.get_head());
 
         match dir {
             Direction::Up => new_head.y -= 1,

@@ -1,6 +1,6 @@
 use std::{clone, io::Error};
 
-use ratatui::{layout::Constraint, style::{Color, Style, Stylize}, widgets::{Block, Borders, Cell, Paragraph, Row, Table}, Frame};
+use ratatui::{layout::{Alignment, Constraint}, style::{Color, Style, Stylize}, widgets::{block::Title, Block, Borders, Cell, Paragraph, Row, Table}, Frame};
 
 use crate::{game::GameState};
 use std::borrow::Cow;
@@ -37,9 +37,9 @@ pub fn render(state: &GameState, f : &mut Frame) -> Result<(), Error> {
 
 
         
+        let score = format!("Score: {}", state.score);
 
-
-        let table = Table::new(rows, [Constraint::Length(2); 20 as usize]).block(Block::default().borders(Borders::ALL).title(state.dir.to_string()));
+        let table = Table::new(rows, [Constraint::Length(2); 20 as usize]).block(Block::default().borders(Borders::ALL).title(Title::from(state.dir.to_string()).alignment(Alignment::Left)).title(score).title_alignment(Alignment::Center));
 
         // render the table to the center of the screen
 

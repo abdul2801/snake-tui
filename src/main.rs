@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
 
     let mut terminal = ratatui::Terminal::new(backend).unwrap();
 
-    let events = EventHandler::new(500);
+    let events = EventHandler::new(250);
 
     let mut tui = Tui::new(terminal, events);
     let mut dir = game.dir.clone();

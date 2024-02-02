@@ -39,7 +39,7 @@ pub fn render(state: &GameState, f : &mut Frame) -> Result<(), Error> {
         
 
 
-        let table = Table::new(rows, [Constraint::Length(2); 20 as usize]).block(Block::default().borders(Borders::ALL).title("Table"));
+        let table = Table::new(rows, [Constraint::Length(2); 20 as usize]).block(Block::default().borders(Borders::ALL).title(state.dir.to_string()));
 
         // render the table to the center of the screen
 

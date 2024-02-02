@@ -34,6 +34,18 @@ pub enum Direction {
     Right,
 }
 
+impl ToString for Direction {
+    fn to_string(&self) -> String {
+        match self {
+            Direction::Up => "Up".to_string(),
+            Direction::Down => "Down".to_string(),
+            Direction::Left => "Left".to_string(),
+            Direction::Right => "Right".to_string(),
+        }
+    }
+}
+
+
 impl Direction {
     pub fn opposite(dir : &Direction) -> Direction {
         match dir {
@@ -74,8 +86,8 @@ impl GameState {
         self.snake.front().unwrap()
     }
 
-    pub fn is_valid_border(&self) -> bool {
-        let head = self.get_head();
+    pub fn is_valid_border(&self,head : &Point) -> bool {
+        
 
         if head.x < 0 || head.x >= self.board.0 || head.y < 0 || head.y >= self.board.1 {
             return false;
@@ -129,19 +141,21 @@ impl GameState {
         let cur_head = self.get_head();
         let mut new_head = Point::new(cur_head.x,cur_head.y);
 
-        if self.dir == Direction::opposite(&self.dir) {
+        if dir == Direction::opposite(&self.dir) {
             dir = self.dir.clone();
         }
         // println!("{:?}", self.get_head());
-
+        
         match dir {
-            Direction::Up => new_head.y -= 1,
-            Direction::Down => new_head.y +=1,
-            Direction::Left => new_head.x -=1,
-            Direction::Right => new_head.x +=1,
+                Direction::Up => new_head.y -= 1,
+                Direction::Down => new_head.y +=1,
+                Direction::Left => new_head.x -=1,
+                Direction::Right => new_head.x +=1,
         }
+        
+       
 
-        if !self.is_valid_border() || self.snake_overlap(&new_head) {
+        if !self.is_valid_border(&new_head) || self.snake_overlap(&new_head) {
             self.game_over = true;
             return;
         }
